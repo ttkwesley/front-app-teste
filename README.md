@@ -1,59 +1,52 @@
-# Frontangular
+## 🌐 Iniciando o Frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.7.
-
-## Development server
-
-To start a local development server, run:
+Para iniciar a aplicação Angular localmente, execute:
 
 ```bash
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+ou
 
 ```bash
-ng generate component component-name
+ng s
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+### ⚠️ Observação:
+Para usar um usuário com perfil de administrador e acessar menus restritos por permissão (role), é necessário alterar o papel do usuário no banco de dados manualmente:
 
-```bash
-ng generate --help
+```sql
+UPDATE cadastro_usuario
+SET role = 'adm'
+WHERE id = {seu_id_de_usuario}
+  AND role = 'user';
 ```
 
-## Building
+## 🌪️ Estrutura do Frontend (Angular)
 
-To build the project run:
+A pasta `src/app` contém a organização principal da aplicação Angular:
 
-```bash
-ng build
-```
+- **`components/`**: Componentes de interface visual divididos por funcionalidade:
+  - `auth/`: telas de login, cadastro etc.
+  - `home/`: página inicial ou painel após login.
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+- **`guards/`**: Proteções de rota:
+  - `auth.guard.ts`: impede acesso não autorizado a rotas protegidas.
 
-## Running unit tests
+- **`services/`**: Serviços para chamadas HTTP:
+  - `auth/`: autenticação e autorização.
+  - `candidatura/`: envio de candidaturas.
+  - `vagas/`: gestão de vagas.
+  - `notificacao.service.ts`: envio de notificações.
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+- **Arquivos principais:**
+  - `app.component.ts`: componente raiz da aplicação.
+  - `app.routes.ts`: definição de rotas.
+  - `app.config.ts`: configuração da aplicação.
+  - `main.ts` e `server.ts`: bootstrap e SSR (server-side rendering).
 
-```bash
-ng test
-```
+- **Arquivos de configuração:**
+  - `angular.json`, `package.json`, `tsconfig.*`: configuração do Angular e TypeScript.
 
-## Running end-to-end tests
 
-For end-to-end (e2e) testing, run:
 
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
