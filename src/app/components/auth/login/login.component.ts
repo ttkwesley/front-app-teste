@@ -26,7 +26,6 @@ export class LoginComponent {
   
     this.authService.login(loginData).subscribe({
       next: (response) => {
-        console.log('Login realizado com sucesso', response); 
         localStorage.setItem('token', response.token); 
         localStorage.setItem('idUsuario', response.idUsuario)
         localStorage.setItem('userName', this.username)
@@ -35,7 +34,6 @@ export class LoginComponent {
         this.router.navigate(['/home']); 
       }, 
       error: (error) => {
-        console.error('Erro no login', error); 
         alert('Email ou senha inválidos!');
       }
     });
