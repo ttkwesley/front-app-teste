@@ -1,0 +1,72 @@
+<app-cabecalho></app-cabecalho>
+
+<div class="main-container">
+
+  <div class="form-container">
+    <h4>Cadastro de Vaga</h4>
+  
+    <form (ngSubmit)="onSubmit()" #vagaForm="ngForm" class="formulario">
+      
+      <div class="form-group">
+        <label for="titulo">Título da Vaga:</label>
+        <input type="text" id="titulo" name="titulo" [(ngModel)]="vaga.titulo" required>
+      </div>
+  
+      <div class="form-group">
+        <label for="descricao">Descrição:</label>
+        <textarea id="descricao" name="descricao" [(ngModel)]="vaga.descricao" required></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="requisitos">Requisitos:</label>
+        <textarea id="requisitos" name="requisitos" [(ngModel)]="vaga.requisitos" required></textarea>
+      </div>
+
+      <button type="submit" [disabled]="vagaForm.invalid">Cadastrar Vaga</button>
+    </form>
+  </div>
+
+  <div class="vagas-container">
+    <h4>Suas Vagas Cadastradas</h4>
+
+    <div *ngIf="vagas.length === 0">
+      <p>Você ainda não cadastrou nenhuma vaga.</p>
+    </div>
+
+    <div *ngFor="let v of vagas" class="vaga-card">
+      <p><strong>Titulo:</strong> {{ v.titulo }}</p>
+      <p><strong>Descrição:</strong> {{ v.descricao }}</p>
+      <p><strong>Requisitos:</strong> {{ v.requisitos }}</p>
+
+      <div class="actions">
+        <button (click)="editarVaga(v)">Editar</button>
+        <button (click)="removerVaga(v)">Remover</button>
+        <button (click)="visualizarCandidatos(v)">Visualizar candidatos</button>
+      </div>
+    </div>
+  </div>
+
+<div class="modal" *ngIf="mostrarModalEdicao">
+  <div class="modal-content">
+    <h2>Editar Vaga</h2>
+    <label>Título:</label>
+    <input type="text" [(ngModel)]="vagaEditando.titulo" class="input-editar">
+
+    <label>Descrição:</label>
+    <textarea [(ngModel)]="vagaEditando.descricao" class="textarea-editar"></textarea>
+
+    <label>Requisitos:</label>
+    <input type="text" [(ngModel)]="vagaEditando.requisitos" class="input-editar">
+
+    <div class="modal-actions">
+      <button (click)="salvarEdicao()">Salvar</button>
+      <button (click)="fecharModal()">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+  <div *ngIf="showNotification" class="notification">
+    {{ notificationMessage }}
+  </div>
+
+</div>

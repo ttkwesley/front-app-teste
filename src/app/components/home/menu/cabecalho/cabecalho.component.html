@@ -1,0 +1,57 @@
+<nav class="navbar">
+  <div class="logo">
+    <a href="/home">BuscadorDeVagas</a>
+  </div>
+
+  <div class="hamburger" (click)="toggleMenu()">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+
+  <ul class="menu" [ngClass]="{'show': menuOpen}">
+    
+    <li class="menu-item" *ngIf="isUserAdmin()">
+      <a href="/cadastrar-vaga">
+        <i class="fa-solid fa-pen-to-square"></i>
+        <span class="tooltip">Cadastrar Vaga</span>
+      </a>
+    </li>
+
+    <li class="menu-item notification-icon" (click)="toggleNotifications()">
+      <a>
+        <i class="fas fa-bell" [ngClass]="{'notification-alert': notifications.length > 0}"></i>
+        <span *ngIf="notifications.length > 0" class="badge">{{ notifications.length }}</span>
+        <span class="tooltip">Notificações</span>
+      </a>
+
+      <div *ngIf="notificationsVisible" class="notification-modal">
+        <ul>
+          <li *ngFor="let notification of notifications; let i = index" (click)="marcarComoLida(i)">
+            {{ notification.mensagem }}
+          </li>
+        </ul>
+      </div>
+    </li>
+
+    <li class="menu-item">
+      <a href="/vagas-candidato">
+        <i class="fas fa-flag"></i>
+        <span class="tooltip">Minhas Vagas</span>
+      </a>
+    </li>
+
+    <li class="menu-item user-dropdown" (click)="toggleUserMenu()" [class.open]="userMenuOpen">
+      <a>
+        <i class="fas fa-user"></i>
+        <i class="fas fa-caret-down"></i>
+      </a>
+      
+      <ul class="dropdown-menu" [ngClass]="{'show': userMenuOpen}">
+        <span>Olá, {{ nomeUsuario }}</span>
+        <li (click)="logout()">Sair</li>
+      </ul>
+    </li>
+    
+  </ul>
+</nav>

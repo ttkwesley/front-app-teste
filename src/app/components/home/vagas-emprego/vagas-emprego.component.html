@@ -1,0 +1,50 @@
+<app-cabecalho></app-cabecalho>
+
+<div class="container">
+  <div class="search-box">
+    <input type="text" [(ngModel)]="searchTerm" placeholder="Pesquise por vaga" aria-label="Pesquisar vagas" />
+  </div>
+
+  <h4>Vagas para você!</h4>
+
+  <div class="job-list">
+    <div *ngFor="let vaga of filteredVagas" class="job-card">
+      <div class="card-header">
+        <h2>{{ vaga.titulo }}</h2>
+        <p><strong>Localidade:</strong> <br> São Paulo</p>
+        <p><strong>Salario:</strong> <br> A combinar</p>
+        <p><strong>Empresa:</strong> <br> Empresa legal </p>
+        <span class="star" [class.favorited]="vaga.isFavorited" (click)="toggleFavorite(vaga)">
+          &#9733; 
+        </span>
+      </div>
+      <button class="btn btn-primary" (click)="abrirModal(vaga)">Ver mais</button>
+    </div>
+  </div>
+
+  <div class="modal" *ngIf="vagaModal">
+    <div class="modal-content prettier-modal">
+      <button class="close-button" (click)="fecharModal()">×</button>
+
+      <h2 class="modal-title">{{ vagaModal.titulo }}</h2>
+
+      <p><strong>Descrição:</strong></p>
+      <p class="modal-description">{{ vagaModal.descricao }}</p>
+
+      <div class="job-requisitos">
+        <p><strong>Requisitos:</strong></p>
+        <ul>
+          <li *ngFor="let requisito of vagaModal.requisitosArray">{{ requisito }}</li>
+        </ul>
+      </div>
+
+      <button class="apply-button" (click)="candidatar(vagaModal)">
+        <i class="fas fa-arrow-right"></i> Candidatar-se
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="showNotification" class="notification">
+    {{ notificationMessage }}
+  </div>
+</div>

@@ -1,0 +1,50 @@
+<app-cabecalho></app-cabecalho>
+
+<div class="container">
+  <h4>Candidatos para a Vaga</h4>
+
+  <!-- Filtro por status -->
+  <div class="filtro-status">
+    <label for="filtroStatus">Filtrar por Status:</label>
+    <select id="filtroStatus" [(ngModel)]="statusFiltro" (change)="filtrarCandidatos()">
+      <option value="">Todos</option>
+      <option value="Pendente">Pendente</option>
+      <option value="Aprovado">Aprovado</option>
+      <option value="Rejeitado">Rejeitado</option>
+    </select>
+  </div>
+
+  <div *ngIf="candidaturasFiltradas.length === 0">
+    <p>Nenhum candidato encontrado para esta vaga.</p>
+  </div>
+
+  <div class="candidatos-grid" *ngIf="candidaturasFiltradas.length > 0">
+    <div *ngFor="let c of candidaturasFiltradas" class="candidato-card">
+      
+      <!-- Coluna 1: Informações do Candidato -->
+      <div class="info-candidato">
+        <h3>{{ c.usuario.nomeUsuario }} <br></h3>
+        <p><strong>Nome da vaga: <br> </strong>{{ c.vaga.titulo}}</p>
+        <p><strong>Email:</strong> <br> {{ c.usuario.username }}</p>
+        <p><strong>Status atual:</strong> <br> {{ c.status }}</p>
+        <p><strong>Feedback atual:</strong> <br> {{ c.feedback }}</p>
+      </div>
+
+      <!-- Coluna 2: Ações (Feedback e Status) -->
+      <div class="acoes-candidato">
+        <label for="feedback">Feedback:</label>
+        <textarea id="feedback" [(ngModel)]="c.tempFeedback" placeholder="Digite o feedback aqui..."></textarea>
+
+        <label for="status">Novo Status:</label>
+        <select id="status" [(ngModel)]="c.tempStatus">
+          <option value="Pendente">Pendente</option>
+          <option value="Aprovado">Aprovado</option>
+          <option value="Rejeitado">Rejeitado</option>
+        </select>
+
+        <button (click)="salvarFeedback(c)">Salvar</button>
+      </div>
+
+    </div>
+  </div>
+</div>
